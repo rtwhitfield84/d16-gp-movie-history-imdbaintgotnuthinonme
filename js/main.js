@@ -1,5 +1,9 @@
 'use strict';
 
+let signIn = require("./user");
+
+$("#signIn").click(signIn.logInGoogle);
+
 // $("#auth-btn").click(function() {
 //   console.log("clicked auth");
 //   user.logInGoogle()
