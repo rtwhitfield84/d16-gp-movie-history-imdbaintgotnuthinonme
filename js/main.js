@@ -4,6 +4,8 @@ let signIn = require("./user");
 
 $("#searchView").hide();
 
+$(".findNew--layout").hide();
+
 $("#signIn").click(signIn.logInGoogle);
 $("#logOut").click(signIn.logOut);
 
