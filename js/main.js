@@ -2,7 +2,10 @@
 
 let signIn = require("./user");
 
+$("#searchView").hide();
+
 $("#signIn").click(signIn.logInGoogle);
+$("#logOut").click(signIn.logOut);
 
 // $("#auth-btn").click(function() {
 //   console.log("clicked auth");
