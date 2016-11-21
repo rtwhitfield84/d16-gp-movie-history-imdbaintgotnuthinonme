@@ -2,21 +2,26 @@
 
 let signIn = require("./user");
 
+<<<<<<< HEAD
+let Handlebars = require('hbsfy/runtime');
+let moviesTemplate = require('../templates/movies.hbs');
+
+Handlebars.registerPartial('navbar', require('../templates/partials/navbar.hbs'));
+=======
 $("#searchView").hide();
 
 $(".findNew--layout").hide();
+>>>>>>> master
 
 $("#signIn").click(signIn.logInGoogle);
 $("#logOut").click(signIn.logOut);
 
-// $("#auth-btn").click(function() {
-//   console.log("clicked auth");
-//   user.logInGoogle()
-//   .then(function(result){
-//     let user = result.user;
-//     console.log('logged in user', user.uid);
-//     $("#auth-btn").addClass('is-hidden');
-//     $("#logout").removeClass('is-hidden');
-//     loadSongsToDOM();
-//   });
-// });
+
+
+function populatePage(){
+	let newDiv = document.createElement('div');
+	newDiv.innerHTML = moviesTemplate();
+	$("#navbar").append(newDiv);
+}
+
+populatePage();
