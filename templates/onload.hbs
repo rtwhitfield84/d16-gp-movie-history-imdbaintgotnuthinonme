@@ -1,10 +1,11 @@
-{{# each Search}}
 
 <div class="row">
-	<div id={{imdbID}} class="col-offset-md-1 col-md-3">
-		<img class="poster">{{Poster}}
+{{# each Search}}
+		<div id={{imdbID}} class="col-offset-md-1 col-md-3">
+		<img class="poster" src="{{Poster}}">
 		<p class="title">{{Title}}</p>
 		<p class="year">{{Year}}</p>
 		<p class="plot">{{Plot}}</p>
 	</div>
+{{/each}}
 </div>
