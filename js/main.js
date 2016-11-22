@@ -10,7 +10,6 @@ Handlebars.registerPartial('navbar', require('../templates/partials/navbar.hbs')
 
 $("#searchView").hide();
 $(".findNew--layout").hide();
-$("#signIn").click(signIn.logInGoogle);
 $("#logOut").click(signIn.logOut);
 
 
@@ -37,6 +36,8 @@ function navActions() {
 			console.log("Home");
 			$('.findNew--layout').hide();
 			$('#searchView').hide();
+		} else if ($(event.target).html() === "Sign in"){
+			signIn.logInGoogle();	
 		}
 	});
 }
