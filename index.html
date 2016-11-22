@@ -14,86 +14,40 @@
 		<link rel="stylesheet" href="css/main.css">
 	</head>
 
-<body>
-	<div class="container-fluid">
+	<body>
+		<div class="container-fluid">
 
-		<div class="nav row" id="navbar"> <!-- This div is for testing inserting the navbar partial.   -->
-		</div>
-
-		<div class="row">
-			<div class="col-md-offset-3 col-md-8">
-			<h1>IMDB Ain't Got Nuthin on Me:</h1>
-			<h3>Your Movies, Your Ratings, All Yours, All the Time</h3>
-		</div>
-
-		<div class="row" id="headline">
-			<div class="col-md-8">
-			<h2>Here's a sample of what you can watch: </h2>
-			</div>
-		</div>
-
-		<div id="dbSample" class="col-md-3">
-		</div>
-
-		<div id="searchView" class="row">
-			<div class="col-md-offset-4 col-md-8">
-				<input id="search" type="text" placeholder="Enter a Title">
-				<button id="sendSearch" class="btn btn-default">Search</button>
+			<div class="nav row" id="navbar"> <!-- This div is for testing inserting the navbar partial.   -->
 			</div>
 
-			<div id="statusArea" class="row">
-				<div class="col-md-offset-4 col-md-8">
-					<button id="viewed" class="btn btn-primary btn-lg active">Watched</button>
-					<button id="notViewed" class="btn btn-default btn-lg">Unwatched</button>
+			<div class="row" id="headline">
+				<div class="col-md-8">
 				</div>
 			</div>
 
-			<div id="userMovies" class="row">
-				<div id="movieCards" class="col-md-4">
-				</div>
+			<div id="dbSample" class="col-md-3">
 			</div>
+
+			<div id="untrackedView" class="row">
+			</div>
+
+			<div class="col-md-4" id="watchedView">
+			</div>
+
+            <div class="col-md-4" id="unwatchedView">
+            </div>
+
+            <div class="col-md-4" id="favoritesView">
+            </div>
 		</div>
-
-        <!-- View for FIND NEW page -->
-        <div class="container findNew--layout">
-            <div class="row center-block ">
-                <div class="col-md-4 findNew-box">
-                    <div class="row findNew-title text-center">
-						<input id="newTitle" type="text" placeholder="Title search">
-                    </div>
-                    <div class="row findNew-year text-center">
-                    	<input id="newYear" type="text" placeholder="Year search">
-                    </div>
-                    <div class="row findNew-submit">
-                        <a class="btn btn-md findNew-button" id="submitBtn-FN">Submit Button</a>
-                    </div>
-                </div>
-            </div>
-              <div class="form-group"></div> <!--To add space vertically in between-->
-            <div class="row center-block">
-                <div class="col-md-4 findNew-box">
-                    <div class="row findNew-image text-center">Image</div>
-                    <div class="row findNew-title text-center">Title</div>
-                    <div class="row findNew-year text-center">Year</div>
-                    <div class="row findNew-plot text-center">Plot</div>
-                    <div class="row findNew-addWatchlist center-block">
-                        <a class="btn btn-md findNew-button" id="addWatch-FN">Add To Watchlist</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-
-
-	</div> <!-- close container div -->
 
 		<!-- jQuery -->
-	<script src="dist/jquery.min.js"></script>
+		<script src="dist/jquery.min.js"></script>
 
 		<!-- Boostrap -->
-	<script src="dist/js/bootstrap.min.js"></script>
+		<script src="dist/js/bootstrap.min.js"></script>
 
-	<script src="dist/app.js"></script>
+		<script src="dist/app.js"></script>
 
 	</body>
 </html>

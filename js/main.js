@@ -8,6 +8,7 @@ let moviesTemplate = require('../templates/movies.hbs');
 let cardTemplate = require('../templates/onload.hbs');
 
 Handlebars.registerPartial('navbar', require('../templates/partials/navbar.hbs'));
+Handlebars.registerPartial('searchOptions', require('../templates/partials/breadcrumbs.hbs'));
 Handlebars.registerHelper("rowHelper", function() {
 	if (index % 3 === 0) {
 		let newDiv = document.createElement("div");
