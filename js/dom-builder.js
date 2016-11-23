@@ -1,9 +1,11 @@
 "use strict";
 
+let cardTemplate = require('../templates/onload.hbs');
+
 function createCards (data) {
 	console.log("create cards", data );
 	let cardInfo = cardTemplate(data);
-	$("#headline").html(cardInfo);
+	$("#mainView").html(cardInfo);
 }
 
-module.exports = createCards;
+module.exports = {createCards};
