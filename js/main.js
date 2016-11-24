@@ -2,18 +2,31 @@
 
 let signIn = require("./user");
 let Handlebars = require('hbsfy/runtime');
-let cardTemplate = require('../templates/onload.hbs');
+let untrackedResults = require("./Untracked.js");
+let populateCards = require('./dom-builder.js');
+let dbInteractions = require('./db-interactions.js');
 
-// let populateCards = require('./dom-builder.js');
+dbInteractions.getMovies().then (function(data){
+	(populateCards.createCards(data));
+});
 
-// getMovies().then (function(data){
-// 	(createCards(data));
-// });
-
-$("#searchView").hide();
-$("#untrackedView").hide();
-$("#favoritesView").hide();
+$("#unwatchedView, #watchedView, #favoritesView").hide();
 $("#signin").click(signIn.logInGoogle);
 $("#logout").click(signIn.logOut);
 
+/*-- Search Button click--*/
+$("#search").click(function(){
+	let input = $("#searchBar").val();
+	$("#mainView, #searchSpan").show();
+	$("#untracked, #unwatched, #watched, #favorites, #unwatchedSpan, #watchedSpan, #favoritesSpan").hide();
+	untrackedResults.getUntracked(input).then(function(data){
+		populateCards.createCards(data);
+	});
+});
+
+/*-- Show Untracked click --*/
+$("#untracked").click(function() {
+	console.log("Untracked button clicked");
+	$("#unwatchedView, #watchedView, #favoritesView, #unwatchedSpan, #watchedSpan, #favoritesSpan").hide();
+});
 

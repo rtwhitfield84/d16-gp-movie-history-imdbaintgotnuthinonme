@@ -2,7 +2,7 @@
 function getMovies () {
 	return new Promise( (resolve, reject) => {
 		$.ajax({
-			url: "http://www.omdbapi.com/?s=Batman&page=3"
+			url: "http://www.omdbapi.com/?s=Batman&page=2"
 		}).done(function(data) {
 			resolve(data);
 		}).fail( (error) => {
@@ -11,4 +11,4 @@ function getMovies () {
 	});
 }
 
-module.exports = getMovies;
+module.exports = {getMovies};
