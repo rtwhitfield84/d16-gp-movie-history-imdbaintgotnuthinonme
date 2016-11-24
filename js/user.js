@@ -8,8 +8,11 @@ firebase.auth().onAuthStateChanged(function(user){
 	if(user){
 		currentUser = user.uid;
 		console.log('currentUser logged in?', currentUser);
+		$("#untracked, #unwatched, #watched, #favorites, #unwatchedSpan, #watchedSpan, #favoritesSpan").show();
+		$("#unwatchedSpan, #watchedSpan, #favoritesSpan").hide();
 	} else {
 		currentUser = null;
+			$("#untracked, #unwatched, #watched, #favorites, #searchSpan, #unwatchedSpan, #watchedSpan, #favoritesSpan").hide();
 		console.log('currentUser logged out?', currentUser);
 	}
 });
@@ -26,4 +29,4 @@ function getUser(){
 	return currentUser;
 }
 
-module.exports = { logInGoogle, logOut, getUser };
+module.exports = { logInGoogle, logOut, getUser, currentUser };

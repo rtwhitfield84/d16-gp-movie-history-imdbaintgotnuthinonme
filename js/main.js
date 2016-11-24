@@ -10,16 +10,15 @@ dbInteractions.getMovies().then (function(data){
 	(populateCards.createCards(data));
 });
 
-$("#unwatchedView").hide();
-$("#watchedView").hide();
-$("#favoritesView").hide();
+$("#unwatchedView, #watchedView, #favoritesView").hide();
 $("#signin").click(signIn.logInGoogle);
 $("#logout").click(signIn.logOut);
 
 /*-- Search Button click--*/
 $("#search").click(function(){
 	let input = $("#searchBar").val();
-	$("#mainView").show();
+	$("#mainView, #searchSpan").show();
+	$("#untracked, #unwatched, #watched, #favorites, #unwatchedSpan, #watchedSpan, #favoritesSpan").hide();
 	untrackedResults.getUntracked(input).then(function(data){
 		populateCards.createCards(data);
 	});
@@ -28,10 +27,6 @@ $("#search").click(function(){
 /*-- Show Untracked click --*/
 $("#untracked").click(function() {
 	console.log("Untracked button clicked");
-	$("#unwatchedView").hide();
-	$("#watchedView").hide();
-	$("#favoritesView").hide();
-	$("#unwatchedSpan").hide();
-	$("#watchedSpan").hide();
-	$("#favoritesSpan").hide();
+	$("#unwatchedView, #watchedView, #favoritesView, #unwatchedSpan, #watchedSpan, #favoritesSpan").hide();
 });
+
