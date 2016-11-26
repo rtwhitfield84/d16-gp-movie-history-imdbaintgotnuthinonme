@@ -9,6 +9,7 @@
 
 		<!-- Bootstrap -->
 		<link rel="stylesheet" type="text/css" href="/dist/css/bootstrap.min.css">
+		<link href="lib/node_modules/jquery-bar-rating/themes/bootstrap-stars.css">
 
 		<!-- from main.scss	 -->
 		<link rel="stylesheet" href="css/main.css">
@@ -63,6 +64,14 @@
 		</div>
 		<!-- jQuery -->
 		<script src="dist/jquery.min.js"></script>
+		<script src="lib/node_modules/jquery-bar-rating/dist/jquery.barrating.min.js"></script>
+		<script type="text/javascript">
+		   $(function() {
+		      $('#rating').barrating({
+		        theme: 'fontawesome-stars'
+		      });
+		   });
+		</script>
 
 		<!-- Boostrap -->
 		<script src="dist/js/bootstrap.min.js"></script>

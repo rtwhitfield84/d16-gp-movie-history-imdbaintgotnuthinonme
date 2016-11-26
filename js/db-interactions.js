@@ -1,4 +1,6 @@
 "use strict";
+
+//function used to load movies onto DOM on splash page
 function getMovies () {
 	return new Promise( (resolve, reject) => {
 		$.ajax({
@@ -11,18 +13,8 @@ function getMovies () {
 	});
 }
 
-function getUserMovies(currentUser){
-	return new Promise((resolve, reject)=>{
-		$.ajax({
-			url: `https://imdb-group.firebaseapp.com/imdb-group/`
-		}).done(function(data){
-			resolve(data);
-		}).fail((error) =>{
-			reject(error);
-		});
-	});
-}
 
+//function used to pull movie info from OMDB before storing into Firebase
 function saveMovies (movieId) {
 	return new Promise((resolve, reject) =>{
 		$.ajax({
@@ -35,6 +27,7 @@ function saveMovies (movieId) {
 	});
 }
 
+//function used to store movies into Firebase
 function storeMovies(data, currentUser){
 	return new Promise((resolve, reject)=>{
 		$.ajax({
@@ -45,6 +38,7 @@ function storeMovies(data, currentUser){
 	});
 }
 
+//function to get unwatched movies
 function getUnwatchedMovies(currentUser) {
 	return new Promise(function(resolve, reject){
 		$.ajax({
@@ -55,10 +49,12 @@ function getUnwatchedMovies(currentUser) {
 	});
 }
 
+//function to delete movies from Firebase
+
 function deleteMovies(movieID){
 	return new Promise (function(resolve, reject){
 		$.ajax({
-			url: `https://imdb-group.firebaseio.com/imdb-group/movies${movieID}.json`,
+			url: `https://imdb-group.firebaseio.com/imdb-group/movies/${movieID}.json`,
 			method: "DELETE",
 		}).done(function(){
 			resolve();
@@ -66,4 +62,33 @@ function deleteMovies(movieID){
 	});
 }
 
-module.exports = {getMovies, saveMovies, storeMovies, getUserMovies, getUnwatchedMovies, deleteMovies};
+//function to set favorites with rating of 10
+
+function setFavs(favDetails, movieToFav){
+	return new Promise(function(resolve, reject){
+		$.ajax({
+			url: ` https://imdb-group.firebaseio.com/imdb-group/movies/${movieToFav}.json`,
+			type: "PUT",
+			data: JSON.stringify(favDetails)
+		}).done(function(data){
+			resolve(data);
+		});
+	});
+}
+
+//function to set watched movies
+
+function setWatched(movieDetails, movieWatched){
+	return new Promise(function(resolve, reject){
+		$.ajax({
+			url: `https://imdb-group.firebaseio.com/imdb-group/movies/${movieWatched}.json `,
+			type: "PUT",
+			data: JSON.stringify(movieDetails)
+		}).done(function(data){
+			resolve(data);
+		});
+	});
+}
+
+
+module.exports = {getMovies, saveMovies, storeMovies, getUnwatchedMovies, deleteMovies, setFavs, setWatched};
