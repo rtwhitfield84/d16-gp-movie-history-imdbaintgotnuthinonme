@@ -84,13 +84,13 @@ function searchDatabase() {
 				console.log("Unwatched IDs", unwatchedIds);
 
 				$(unwatchedIds).each(function(i) {
-					if (unwatchedIds[i] === untrackedIds) {
-						console.log("Match Found", untrackedIds[i]);
-					} else {
-						console.log("No Matches Found");
-						console.log("Untracked", untrackedIds[i]);
-						console.log("Unwatched", unwatchedIds[i]);
-					}
+					$(untrackedIds).each(function(j) {
+						if (unwatchedIds[i] === untrackedIds[j]) {
+							console.log("Match Found!", untrackedIds[j]);
+						} else {
+							console.log("No Matches Found");
+						}
+					});
 				});
 		});
 
