@@ -42,7 +42,7 @@ function storeMovies(data, currentUser){
 function getUnwatchedMovies(currentUser) {
 	return new Promise(function(resolve, reject){
 		$.ajax({
-			url: ` https://imdb-group.firebaseio.com/imdb-group/movies.json `	
+			url: ` https://imdb-group.firebaseio.com/imdb-group/movies.json `
 		}).done(function(data){
 			resolve(data);
 		});

@@ -6,11 +6,14 @@ let signIn = require("./user");
 
 
 function createCards (data) {
-	console.log("create cards", data );
-	let cardInfo = cardTemplate(data);
-	$("#mainView").html(cardInfo);
-	$(".delete-btn").hide();
-	 $(".add-btn").click(function(e){
+    signIn.getUser();
+    console.log(signIn.getUser());
+    console.log("create cards", data);
+    let cardInfo = cardTemplate(data);
+    $("#mainView").html(cardInfo);
+    $("#untrackedView").html(cardInfo);
+    $(".delete-btn").hide();
+    $(".add-btn").click(function(e){
         let currentUser = signIn.getUser();
         console.log("clicked add");
         if(currentUser === null){
@@ -18,16 +21,17 @@ function createCards (data) {
         } else if (currentUser !== null){
             let movieId = this.id;
             console.log(this.id);
-    		dbInteractions.saveMovies(movieId).then(function(data){
+            dbInteractions.saveMovies(movieId).then(function(data){
                 console.log("saved movie data", data);
-    			data.watched = false;
-    			data.uid = currentUser;
+                data.watched = false;
+                data.uid = currentUser;
                 data.rating = null;
                 console.log("post new prop", data, currentUser);
-    			dbInteractions.storeMovies(data, currentUser);
-    		});	
-    	}
-	});
+                dbInteractions.storeMovies(data, currentUser);
+            });
+
+        }
+    });
 }
 
 module.exports = {createCards};
