@@ -89,8 +89,9 @@ function searchDatabase() {
 							let matchedId = untrackedIds[j];
 							console.log("Match Found!", matchedId);
 							let match = $("body").find('#' + matchedId);
-							console.log("match", $(match).parent());
-							$(match).parent().remove();
+							console.log("MATCH", match.parent());
+							// console.log("match", $(match).parent());
+							$(match).disabled();
 						} else {
 							console.log("No Matches Found");
 						}
@@ -122,16 +123,27 @@ $("#unwatched").click(function(){
 		loadUnwatched();
 		$("#unwatchedView, #unwatchedSpan").show();
 		$("#mainView, #untrackedView, #searchSpan, #watchedView, favoritesView, #favoritesSpan, #watchedSpan, #untrackedSpan").hide();
+		$(document).click(function() {
+			if ($(event.target).html() === 'Delete') {
+				console.log("DELETE");
+				let movieID = this.id;
+				dbInteractions.deleteMovies(movieID);
+				event.target.parentNode.remove();
+			}
+		});
 	} else {
 		$("#unwatchedView, #unwatchedSpan").show();
 		$("#mainView, #untrackedView, #searchSpan, #watchedView, favoritesView, #favoritesSpan, #watchedSpan, #untrackedSpan").hide();
+		$(document).click(function() {
+			if ($(event.target).html() === 'Delete') {
+				console.log("DELETE");
+				let movieID = this.id;
+				dbInteractions.deleteMovies(movieID);
+				event.target.parentNode.remove();
+			}
+		});
 	}
 	let currentUser = signIn.getUser();
-                $(".delete-btn").click(function(e){
-                	let movieID = this.id;
-                	dbInteractions.deleteMovies(movieID);
-                	event.target.parentNode.remove();
-                });
 				$(".rating").change(function(){
 					let userRating = $(this).val();
 					if(userRating !== "10"){
