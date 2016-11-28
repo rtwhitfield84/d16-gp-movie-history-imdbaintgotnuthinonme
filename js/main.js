@@ -91,28 +91,15 @@ function searchDatabase() {
 				console.log("Current User ID: ", signIn.getUser());
 				let input = $("#searchBar").val();
 				showUntracked();
-					untrackedResults.getUntracked(input).then(function(data){
+				untrackedResults.getUntracked(input).then(function(data){
 					populateCards.createCards(data);
 					$(data.Search).each(function(i) {
 						untrackedIds.push(data.Search[i].imdbID);
+						checkIds();
 					});
-					console.log("Untracked IDs: ", untrackedIds);
-					console.log("Unwatched IDs", unwatchedIds);
-
-					$(unwatchedIds).each(function(i) {
-						$(untrackedIds).each(function(j) {
-							if (unwatchedIds[i] === untrackedIds[j]) {
-								let matchedId = untrackedIds[j];
-								console.log("Match Found!", matchedId);
-								let match = $("body").find('#' + matchedId);
-								console.log("MATCH", match.parent());
-								$(match).disabled();
-							} else {
-								console.log("No Matches Found");
-							}
-						});
-					});
-			});
+				console.log("Untracked IDs: ", untrackedIds);
+				console.log("Unwatched IDs", unwatchedIds);
+				});
 			}
 		} else {
 			showUntracked();
@@ -120,13 +107,31 @@ function searchDatabase() {
 		}
 }
 
+function checkIds() {
+	$(unwatchedIds).each(function(i) {
+		$(untrackedIds).each(function(j) {
+			if (unwatchedIds[i] === untrackedIds[j]) {
+				let matchedId = untrackedIds[j];
+				console.log("Match Found!", matchedId);
+				let match = $("body").find('#' + matchedId);
+				console.log("MATCH", match.parent());
+				$(match).parent().remove();
+			} else {
+				console.log("No Matches Found");
+			}
+		});
+	});
+}
+
 /*-- Show Untracked click --*/
 $("#untracked").click(function() {
 	if ($('#searchBar').val()) {
 		searchDatabase();
 		showUntracked();
+		loadUnwatched();
 	} else {
 		showUntracked();
+		loadUnwatched();
 		$('#untrackedView').html('No search criteria to fetch!');
 	}
 	console.log("Untracked button clicked");
@@ -140,6 +145,7 @@ $("#untracked").click(function() {
 $("#unwatched").click(function(){
 	console.log("unwatched clicked");
 	showUnwatched();
+	checkIds();
 		$(document).click(function() {
 			if ($(event.target).html() === 'Delete') {
 				console.log("DELETE");
