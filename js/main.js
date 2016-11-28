@@ -21,6 +21,12 @@ let favoritesElements = $('#favoritesView, #favoritesSpan');
 
 dbInteractions.getMovies().then (function(data){
 	(populateCards.createCards(data));
+		if ( $('#unwatchedView').empty() ) {
+			loadUnwatched();
+			$(unwatchedElements).hide();
+		} else {
+			console.log("poo");
+		}
 });
 
 
@@ -133,10 +139,7 @@ $("#untracked").click(function() {
 
 $("#unwatched").click(function(){
 	console.log("unwatched clicked");
-	if ( $('#unwatchedView').empty() ) {
-		loadUnwatched();
-		$("#unwatchedView, #unwatchedSpan").show();
-		$("#mainView, #untrackedView, #searchSpan, #watchedView, favoritesView, #favoritesSpan, #watchedSpan, #untrackedSpan").hide();
+	showUnwatched();
 		$(document).click(function() {
 			if ($(event.target).html() === 'Delete') {
 				console.log("DELETE");
@@ -145,18 +148,6 @@ $("#unwatched").click(function(){
 				event.target.parentNode.remove();
 			}
 		});
-	} else {
-		$("#unwatchedView, #unwatchedSpan").show();
-		$("#mainView, #untrackedView, #searchSpan, #watchedView, favoritesView, #favoritesSpan, #watchedSpan, #untrackedSpan").hide();
-		$(document).click(function() {
-			if ($(event.target).html() === 'Delete') {
-				console.log("DELETE");
-				let movieID = this.id;
-				dbInteractions.deleteMovies(movieID);
-				event.target.parentNode.remove();
-			}
-		});
-	}
 	let currentUser = signIn.getUser();
 				$(".rating").change(function(){
 					let userRating = $(this).val();
@@ -212,12 +203,14 @@ $("#watched").click(function(){
 
 function showUntracked() {
 	$(untrackedElements, '#searchSpan').show();
+	$('#searchSpan').show();
 	$(unwatchedElements, watchedElements, favoritesElements, '#mainView').hide();
 }
 
 function showUnwatched() {
+	$('#mainView').hide();
+	$(untrackedElements, watchedElements, favoritesElements).hide();
 	$(unwatchedElements).show();
-	$(untrackedElements, watchedElements, favoritesElements, '#mainView').hide();
 }
 
 function showWatched() {
