@@ -12,12 +12,15 @@ let fb = require('./fb-interactions');
 let watched = require('./watched');
 let unwatchedIds = [];
 let untrackedIds = [];
+let watchedArr = [];
 let userButtons = $('#untracked, #unwatched, #watched, #favorites');
 let userElements = $('#unwatchedSpan, #watchedSpan, #favoritesSpan, #untrackedSpan');
 let untrackedElements = $('#untrackedView, #untrackedSpan');
 let unwatchedElements = $('#unwatchedView, #unwatchedSpan');
 let watchedElements = $('#watchedView, #watchedSpan');
 let favoritesElements = $('#favoritesView, #favoritesSpan');
+let movieTemplate = require('../templates/movieTemplate.hbs');
+let see;
 
 dbInteractions.getMovies().then (function(data){
 	(populateCards.createCards(data));
@@ -205,15 +208,17 @@ $("#unwatched").click(function(){
 
 /*-- Show WATCHED click --*/
 $("#watched").click(function(){
-	console.log("watch clicked");
-	// $('#watchedView, #watchedSpan').show();
-	// $('#untrackedView, #untrackedSpan, #unwatchedView, #unwatchedSpan').hide();
-	showWatched();
+    console.log("watch clicked");
     watched.getWatched().then(function(data){
     	console.log("data", data);
-        let watchedInfo = populateCards.createCards(data);
-        $("#watchedView").append(watchedInfo);
+    	for (var prop in data) {
+    		see = Object.keys(data);
+    	}
+    	console.log("see", see);
     });
+        // populateCards.watchedTemplate(data);
+        // showWatched();
+
 });
 
 //rating functionality
@@ -234,7 +239,8 @@ function showUnwatched() {
 
 function showWatched() {
 	$(watchedElements).show();
-	$(untrackedElements, unwatchedElements, favoritesElements, '#mainView').hide();
+	$('#mainView').hide();
+	$(untrackedElements, unwatchedElements, favoritesElements).hide();
 }
 
 function showFavorites() {

@@ -1,12 +1,12 @@
 "use strict";
 
 let signIn = require("./user");
-let currentUser = signIn.getUser();
+// let currentUser = signIn.getUser();
 // let userId = currentUser.uid;
 
-function getWatched(currentUser) {
-	signIn.getUser();
-	currentUser = signIn.getUser();
+function getWatched() {
+	// signIn.getUser();
+	let currentUser = signIn.getUser();
 	console.log("currentUser", currentUser);
     return new Promise(function(resolve, reject){
         $.ajax({
