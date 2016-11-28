@@ -128,15 +128,24 @@ $("#untracked").click(function() {
 	if ($('#searchBar').val()) {
 		searchDatabase();
 		showUntracked();
-		loadUnwatched();
+		checkUnwatched();
 	} else {
 		showUntracked();
-		loadUnwatched();
+		checkUnwatched();
 		$('#untrackedView').html('No search criteria to fetch!');
 	}
 	console.log("Untracked button clicked");
 
 });
+
+function checkUnwatched() {
+	if ($('#unwatchedView').empty()) {
+			loadUnwatched();
+			console.log("EMPTY OR NOT?");
+		} else {
+			console.log("Not empty");
+		}
+}
 
 
 
@@ -149,7 +158,8 @@ $("#unwatched").click(function(){
 		$(document).click(function() {
 			if ($(event.target).html() === 'Delete') {
 				console.log("DELETE");
-				let movieID = this.id;
+				let movieID = event.target.id;
+				console.log("Delete movieID", movieID);
 				dbInteractions.deleteMovies(movieID);
 				event.target.parentNode.remove();
 			}
