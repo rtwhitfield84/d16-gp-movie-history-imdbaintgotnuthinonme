@@ -181,17 +181,18 @@ $("#unwatched").click(function(){
 							userRating: userRating
 						};
 						console.log(movieDetails);
-						dbInteractions.setWatched(movieWatched, movieDetails);
+						dbInteractions.setFavs(movieDetails, movieWatched);
 					} else if(userRating === "10"){
 						let movieToFav = event.target.parentNode.childNodes[13].id;
+						console.log("movieToFav", movieToFav);
 						event.target.parentNode.remove();
 						let favDetails = {
 							Title: event.target.parentNode.childNodes[3].innerHTML,
 							Poster: event.target.parentNode.childNodes[1].src,
-							Year:event.target.parentNode.childNodes[5].innerHTML,
-							Plot:event.target.parentNode.childNodes[7].innerHTML,
+							Year: event.target.parentNode.childNodes[5].innerHTML,
+							Plot: event.target.parentNode.childNodes[7].innerHTML,
 							uid: currentUser,
-							imdbID:event.target.parentNode.id,
+							imdbID: event.target.parentNode.id,
 							watched: true,
 							userRating: 10
 						};
@@ -205,9 +206,11 @@ $("#unwatched").click(function(){
 /*-- Show WATCHED click --*/
 $("#watched").click(function(){
 	console.log("watch clicked");
-	$('#watchedView, #watchedSpan').show();
-	$('#untrackedView, #untrackedSpan, #unwatchedView, #unwatchedSpan').hide();
+	// $('#watchedView, #watchedSpan').show();
+	// $('#untrackedView, #untrackedSpan, #unwatchedView, #unwatchedSpan').hide();
+	showWatched();
     watched.getWatched().then(function(data){
+    	console.log("data", data);
         let watchedInfo = populateCards.createCards(data);
         $("#watchedView").append(watchedInfo);
     });
