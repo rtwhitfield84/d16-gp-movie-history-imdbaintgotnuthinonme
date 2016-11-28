@@ -42,9 +42,18 @@ $("#signin").click( () => {
 	} else {
 		signIn.logInGoogle();
 	}
+
+	$("#signin").hide();
+	$("#logout").show();
+
 });
 
-$("#logout").click(signIn.logOut);
+$("#logout").click(function(){
+	signIn.logOut();
+	$("#logout").hide();
+	$("#signin").show();
+
+});
 
 function loadUnwatched() {
 	console.log("LOADUNWATCHED FIRING OFF");
