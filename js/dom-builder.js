@@ -33,6 +33,7 @@ function createCards (data) {
 
         }
     });
+
 }
 
 function watchedTemplate (data){

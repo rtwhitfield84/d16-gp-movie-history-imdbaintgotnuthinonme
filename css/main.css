@@ -1,11 +1,3 @@
-#mainView,
-#untrackedView,
-#unwatchedView,
-#watchedView,
-#favoritesView {
-  width: 80%;
-  margin: 0 auto; }
-
 .findNew--layout {
   border: 2px solid black; }
 
@@ -15,14 +7,5 @@
 .findNew-button {
   border: 1px solid black;
   background-color: lightblue; }
-
-.poster {
-  height: 250px;
-  width: 200px; }
-
-.plot {
-  width: 200px;
-  max-height: 80px;
-  overflow-y: scroll; }
 
 /*# sourceMappingURL=main.css.map */
