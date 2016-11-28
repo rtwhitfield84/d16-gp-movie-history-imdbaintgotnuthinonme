@@ -90,13 +90,13 @@ function searchDatabase() {
 			} else if (signIn.getUser() !== null) {
 				console.log("Current User ID: ", signIn.getUser());
 				let input = $("#searchBar").val();
-				showUntracked();
 				untrackedResults.getUntracked(input).then(function(data){
 					populateCards.createCards(data);
 					$(data.Search).each(function(i) {
 						untrackedIds.push(data.Search[i].imdbID);
 						checkIds();
 					});
+					showUntracked();
 				console.log("Untracked IDs: ", untrackedIds);
 				console.log("Unwatched IDs", unwatchedIds);
 				});
@@ -112,9 +112,9 @@ function checkIds() {
 		$(untrackedIds).each(function(j) {
 			if (unwatchedIds[i] === untrackedIds[j]) {
 				let matchedId = untrackedIds[j];
-				console.log("Match Found!", matchedId);
-				let match = $("body").find('#' + matchedId);
-				console.log("MATCH", match.parent());
+				// console.log("Match Found!", matchedId);
+				let match = $("#untrackedView").find('#' + matchedId);
+				console.log("MATCH", match);
 				$(match).parent().remove();
 			} else {
 				console.log("No Matches Found");
