@@ -18,7 +18,7 @@ function getMovies () {
 function saveMovies (movieId) {
 	return new Promise((resolve, reject) =>{
 		$.ajax({
-			url: ` http://www.omdbapi.com/?i=${movieId} `
+			url: `http://www.omdbapi.com/?i=${movieId} `
 		}).done(function(data){
 			resolve(data);
 		}).fail((error) =>{
@@ -42,7 +42,7 @@ function storeMovies(data, currentUser){
 function getUnwatchedMovies(currentUser) {
 	return new Promise(function(resolve, reject){
 		$.ajax({
-			url: ` https://imdb-group.firebaseio.com/imdb-group/movies.json `
+			url: `https://imdb-group.firebaseio.com/imdb-group/movies.json `
 		}).done(function(data){
 			resolve(data);
 		});
@@ -67,7 +67,7 @@ function deleteMovies(movieID){
 function setFavs(favDetails, movieToFav){
 	return new Promise(function(resolve, reject){
 		$.ajax({
-			url: ` https://imdb-group.firebaseio.com/imdb-group/movies/${movieToFav}.json`,
+			url: `https://imdb-group.firebaseio.com/imdb-group/movies/${movieToFav}.json`,
 			type: "PUT",
 			data: JSON.stringify(favDetails)
 		}).done(function(data){
@@ -81,7 +81,7 @@ function setFavs(favDetails, movieToFav){
 function setWatched(movieDetails, movieWatched){
 	return new Promise(function(resolve, reject){
 		$.ajax({
-			url: `https://imdb-group.firebaseio.com/imdb-group/movies/${movieWatched}.json `,
+			url: `https://imdb-group.firebaseio.com/imdb-group/movies/${movieWatched}.json`,
 			type: "PUT",
 			data: JSON.stringify(movieDetails)
 		}).done(function(data){
