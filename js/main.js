@@ -86,15 +86,17 @@ function searchDatabase() {
 				$(unwatchedIds).each(function(i) {
 					$(untrackedIds).each(function(j) {
 						if (unwatchedIds[i] === untrackedIds[j]) {
-							console.log("Match Found!", untrackedIds[j]);
+							let matchedId = untrackedIds[j];
+							console.log("Match Found!", matchedId);
+							let match = $("body").find('#' + matchedId);
+							console.log("match", $(match).parent());
+							$(match).parent().remove();
 						} else {
 							console.log("No Matches Found");
 						}
 					});
 				});
 		});
-
-
 		}
 	}
 
