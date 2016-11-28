@@ -12,17 +12,27 @@ let fb = require('./fb-interactions');
 let watched = require('./watched');
 let unwatchedIds = [];
 let untrackedIds = [];
+let userButtons = $('#untracked, #unwatched, #watched, #favorites');
+let userElements = $('#unwatchedSpan, #watchedSpan, #favoritesSpan, #untrackedSpan');
+let untrackedElements = $('#untrackedView, #untrackedSpan');
+let unwatchedElements = $('#unwatchedView, #unwatchedSpan');
+let watchedElements = $('#watchedView, #watchedSpan');
+let favoritesElements = $('#favoritesView, #favoritesSpan');
 
 dbInteractions.getMovies().then (function(data){
 	(populateCards.createCards(data));
 });
 
 
-$("#unwatchedView, #watchedView, #favoritesView, #untrackedView").hide();
+$(userElements).hide();
 
 $("#signin").click( () => {
-	signIn.logInGoogle();
-	loadUnwatched();
+	if ( $('#unwatchedView').empty() ) {
+		signIn.logInGoogle();
+		loadUnwatched();
+	} else {
+		signIn.logInGoogle();
+	}
 });
 
 $("#logout").click(signIn.logOut);
@@ -61,56 +71,60 @@ function loadUnwatched() {
 $("#search").click(searchDatabase);
 
 function searchDatabase() {
-		signIn.getUser();
-		if (signIn.getUser() === null) {
-			console.log("Current User ID: ", signIn.getUser());
-			let input = $("#searchBar").val();
-			$("#mainView, #searchSpan").show();
-			$("#untracked, #unwatched, #watched, #favorites, #unwatchedSpan, #watchedSpan, #favoritesSpan").hide();
-			untrackedResults.getUntracked(input).then(function(data){
-				populateCards.createCards(data);
-			});
-		} else if (signIn.getUser() !== null) {
-			console.log("Current User ID: ", signIn.getUser());
-			let input = $("#searchBar").val();
-			$("#mainView, #unwatchedView, #watchedView, #favoritesView, #unwatchedSpan, #watchedSpan, #favoritesSpan").hide();
-			$("#untrackedView, #untrackedSpan, #searchSpan").show();
+		if ($('#searchBar').val()) {
+			signIn.getUser();
+			if (signIn.getUser() === null) {
+				console.log("Current User ID: ", signIn.getUser());
+				let input = $("#searchBar").val();
+				$("#mainView, #searchSpan").show();
+				$(userElements).hide();
 				untrackedResults.getUntracked(input).then(function(data){
-				populateCards.createCards(data);
-				$(data.Search).each(function(i) {
-					untrackedIds.push(data.Search[i].imdbID);
+					populateCards.createCards(data);
 				});
-				console.log("Untracked IDs: ", untrackedIds);
-				console.log("Unwatched IDs", unwatchedIds);
-
-				$(unwatchedIds).each(function(i) {
-					$(untrackedIds).each(function(j) {
-						if (unwatchedIds[i] === untrackedIds[j]) {
-							let matchedId = untrackedIds[j];
-							console.log("Match Found!", matchedId);
-							let match = $("body").find('#' + matchedId);
-							console.log("MATCH", match.parent());
-							// console.log("match", $(match).parent());
-							$(match).disabled();
-						} else {
-							console.log("No Matches Found");
-						}
+			} else if (signIn.getUser() !== null) {
+				console.log("Current User ID: ", signIn.getUser());
+				let input = $("#searchBar").val();
+				showUntracked();
+					untrackedResults.getUntracked(input).then(function(data){
+					populateCards.createCards(data);
+					$(data.Search).each(function(i) {
+						untrackedIds.push(data.Search[i].imdbID);
 					});
-				});
-		});
+					console.log("Untracked IDs: ", untrackedIds);
+					console.log("Unwatched IDs", unwatchedIds);
+
+					$(unwatchedIds).each(function(i) {
+						$(untrackedIds).each(function(j) {
+							if (unwatchedIds[i] === untrackedIds[j]) {
+								let matchedId = untrackedIds[j];
+								console.log("Match Found!", matchedId);
+								let match = $("body").find('#' + matchedId);
+								console.log("MATCH", match.parent());
+								$(match).disabled();
+							} else {
+								console.log("No Matches Found");
+							}
+						});
+					});
+			});
+			}
+		} else {
+			showUntracked();
+			$('#untrackedView').html('No search criteria to fetch!');
 		}
-	}
+}
 
 /*-- Show Untracked click --*/
 $("#untracked").click(function() {
 	if ($('#searchBar').val()) {
 		searchDatabase();
+		showUntracked();
 	} else {
+		showUntracked();
 		$('#untrackedView').html('No search criteria to fetch!');
 	}
 	console.log("Untracked button clicked");
-	$('#untrackedView, #untrackedSpan').show();
-	$("#unwatchedView, #watchedView, #favoritesView, #unwatchedSpan, #watchedSpan, #favoritesSpan").hide();
+
 });
 
 
@@ -194,3 +208,24 @@ $("#watched").click(function(){
 
 //rating functionality
 
+// FUNCTIONS FOR TOGGLING VIEWS
+
+function showUntracked() {
+	$(untrackedElements, '#searchSpan').show();
+	$(unwatchedElements, watchedElements, favoritesElements, '#mainView').hide();
+}
+
+function showUnwatched() {
+	$(unwatchedElements).show();
+	$(untrackedElements, watchedElements, favoritesElements, '#mainView').hide();
+}
+
+function showWatched() {
+	$(watchedElements).show();
+	$(untrackedElements, unwatchedElements, favoritesElements, '#mainView').hide();
+}
+
+function showFavorites() {
+	$(favoritesElements, watchedElements).show();
+	$(untrackedElements, unwatchedElements, '#mainView').hide();
+}

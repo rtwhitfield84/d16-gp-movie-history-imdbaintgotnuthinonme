@@ -1,3 +1,11 @@
+#mainView,
+#untrackedView,
+#unwatchedView,
+#watchedView,
+#favoritesView {
+  width: 80%;
+  margin: 0 auto; }
+
 .findNew--layout {
   border: 2px solid black; }
 
