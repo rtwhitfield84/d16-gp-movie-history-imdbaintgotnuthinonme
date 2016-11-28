@@ -55,15 +55,18 @@ $("#logout").click(function(){
 
 });
 
+let initialRatings = [];
+
 function loadUnwatched() {
-	console.log("LOADUNWATCHED FIRING OFF");
 	let currentUser = signIn.getUser();
 	dbInteractions.getUnwatchedMovies(currentUser).then(function(data){
 			let returnedArray = $.map(data, function(value, index) {
 				 var ids = Object.keys(data);
-                ids.forEach(function(key){
+                ids.forEach(function(key, index){
                 	data[key].id = key;
                 });
+                	if (value.rating !== undefined)
+                		initialRatings.push(value.rating);
                 if (value.watched === false) {
                     let movieObj = {
                     	Title: value.Title,
@@ -77,32 +80,34 @@ function loadUnwatched() {
                     	id: value.id
                     };
                 	let unwatchedMovieInfo = ` <div id='${movieObj.imdbID}' class='col-offset-md-1 col-md-3'>
-                														<img class='poster' src='${movieObj.Poster}'> 
-                														<p class='title'>${movieObj.Title}</p>
-                														<p class='year'>${movieObj.Year}</p>
-                														<p class='plot'>${movieObj.Plot}</p>
-                														<label class='rate'>Rate This Movie</label>
-                														<select class='rating'>
-                														<option value='1'>1</option>
-                														<option value='2'>2</option>
-                														<option value='3'>3</option>
-                														<option value='4'>4</option>
-                														<option value='5'>5</option>
-                														<option value='6'>6</option>
-                														<option value='7'>7</option>
-                														<option value='8'>8</option>
-                														<option value='9'>9</option>
-                														<option value='10'>10</option
-                														</select> 
-                														<button class='delete-btn' id='${movieObj.id}'>Delete</button>
-                														</div> `;
+                															<img class='poster' src='${movieObj.Poster}'> 
+                															<p class='title'>${movieObj.Title}</p>
+                															<p class='year'>${movieObj.Year}</p>
+                															<p class='plot'>${movieObj.Plot}</p>
+                															<label class='rate'>Rate This Movie</label>
+                																<button class='delete-btn' id='${movieObj.id}'>Delete</button>
+                															<hr/>
+                															<select class='rating'>
+                																<option value='1'>1</option>
+		                														<option value='2'>2</option>
+		                														<option value='3'>3</option>
+		                														<option value='4'>4</option>
+		                														<option value='5'>5</option>
+		                														<option value='6'>6</option>
+		                														<option value='7'>7</option>
+		                														<option value='8'>8</option>
+		                														<option value='9'>9</option>
+		                														<option value='10'>10</option
+	                														</select> 
+																						</div> `;
                 	console.log(movieObj);
                 	$("#unwatchedView").append(unwatchedMovieInfo);
 							    
 							    $('.rating').each(function(index, item){
+                	console.log("initialRatings", initialRatings);
 							      $(item).barrating('show', {
 							        theme: 'bootstrap-stars',
-							        initialRating: 5,
+							        initialRating: initialRatings[index] || null,
 							        onSelect: function(value, text, event) {
 							          
 							          if (typeof(event) !== 'undefined') {
@@ -110,6 +115,13 @@ function loadUnwatched() {
 							            let parentEl = $(event.target).parents()[1];
 							            parentEl.firstChild.setAttribute('value', value);
 							            $(parentEl.firstChild).barrating('set', value);
+							            //Targetting Delete Button for id of movie in firebase
+							            let id = $(event.target).parents()[2].childNodes[11].id;
+							            //Targeting select element for value 1-10 of rating
+							            let ratingObj = {
+							            	"rating": $(event.target).parents()[1].firstChild.getAttribute('value')
+							            };
+							            dbInteractions.setRating(ratingObj, id);
 							          } else {
 							            // rating was selected programmatically
 							          }
@@ -203,9 +215,11 @@ function checkUnwatched() {
 // Show unwatched
 
 $("#unwatched").click(function(){
-	console.log("unwatched clicked");
+	console.log("before showUnwatched");
 	showUnwatched();
+	console.log("before checkIds");
 	checkIds();
+		console.log("before.click");
 		$(document).click(function() {
 			if ($(event.target).html() === 'Delete') {
 				console.log("DELETE");
@@ -216,43 +230,7 @@ $("#unwatched").click(function(){
 			}
 		});
 	let currentUser = signIn.getUser();
-				$(".rating").change(function(){
-					let userRating = $(this).val();
-					if(userRating !== "10"){
-						console.log("~~~~~BUGTIME!:", event.target.parentNode);
-						let movieWatched = event.target.parentNode.childNodes[13].id;
-						event.target.parentNode.remove();
-						let movieDetails = {
-							Title: event.target.parentNode.childNodes[3].innerHTML,
-							Poster: event.target.parentNode.childNodes[1].src,
-							Year:event.target.parentNode.childNodes[5].innerHTML,
-							Plot:event.target.parentNode.childNodes[7].innerHTML,
-							uid: currentUser,
-							imdbID:event.target.parentNode.id,
-							watched: true,
-							userRating: userRating
-						};
-						console.log(movieDetails);
-						dbInteractions.setFavs(movieDetails, movieWatched);
-					} else if(userRating === "10"){
-						let movieToFav = event.target.parentNode.childNodes[13].id;
-						console.log("movieToFav", movieToFav);
-						event.target.parentNode.remove();
-						let favDetails = {
-							Title: event.target.parentNode.childNodes[3].innerHTML,
-							Poster: event.target.parentNode.childNodes[1].src,
-							Year: event.target.parentNode.childNodes[5].innerHTML,
-							Plot: event.target.parentNode.childNodes[7].innerHTML,
-							uid: currentUser,
-							imdbID: event.target.parentNode.id,
-							watched: true,
-							userRating: 10
-						};
-						console.log(favDetails);
-						dbInteractions.setFavs(favDetails, movieToFav);
-					}
 
-				});
 });
 
 /*-- Show WATCHED click --*/

@@ -90,5 +90,17 @@ function setWatched(movieDetails, movieWatched){
 	});
 }
 
+function setRating(ratingObject, movieWatched){
+	return new Promise(function(resolve, reject){
+		$.ajax({
+			url: `https://imdb-group.firebaseio.com/movies/${movieWatched}.json`,
+			type: "PATCH",
+			data: JSON.stringify(ratingObject)
+		}).done(function(data){
+			resolve(data);
+		});
+	});
+}
 
-module.exports = {getMovies, saveMovies, storeMovies, getUnwatchedMovies, deleteMovies, setFavs, setWatched};
+
+module.exports = {getMovies, saveMovies, storeMovies, getUnwatchedMovies, deleteMovies, setFavs, setWatched, setRating};
