@@ -3,6 +3,7 @@
 let cardTemplate = require('../templates/onload.hbs');
 let dbInteractions = require('./db-interactions.js');
 let signIn = require("./user");
+let movieTemplate = require('../templates/movieTemplate.hbs');
 
 
 function createCards (data) {
@@ -34,4 +35,9 @@ function createCards (data) {
     });
 }
 
-module.exports = {createCards};
+function watchedTemplate (data){
+    let watchedInfo = movieTemplate(data);
+    $("#watchedView").html(watchedInfo);
+}
+
+module.exports = {createCards, watchedTemplate};

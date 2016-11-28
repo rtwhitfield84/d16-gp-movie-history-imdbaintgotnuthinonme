@@ -29,4 +29,4 @@ function getUser(){
 	return currentUser;
 }
 
-module.exports = { logInGoogle, logOut, getUser, currentUser };
+module.exports = {logInGoogle, logOut, getUser};
