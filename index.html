@@ -7,33 +7,35 @@
   <meta name="author" content="Ali Kimbrell">
   <meta charset="utf-8">
   <!-- Bootstrap -->
-  <link rel="stylesheet" type="text/css" href="/dist/css/bootstrap.min.css">
-  <link href="lib/node_modules/jquery-bar-rating/themes/bootstrap-stars.css">
-  <!-- from main.scss     -->
-  <link rel="stylesheet" href="css/main.css">
-</head>
+        <link rel="stylesheet" type="text/css" href="/dist/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/lib/node_modules/jquery-bar-rating/dist/themes/bootstrap-stars.css">
 
-<body>
-  <div class="container-fluid">
-    <nav class="navbar navbar-default">
-      <div class="collapse navbar-collapse">
-        <div class="row">
-          <div class="col-md-offset-3 col-md-8">
-            <h1>IMDB Ain't Got Nuthin on Me:</h1>
-            <h3>Your Movies, Your Ratings, All Yours, All the Time</h3>
-          </div>
-          <div class="col-offset-md-4 col-md-8" role="search">
-            <input id="searchBar" placeholder="Search for Movies">
-            <button id="search">Search</button>
-            <ul>
-              <li id="signin">Sign In/Sign Up</li>
-              <li id="logout">Log Out</li>
-            </ul>
-          </div>
-        </div>
-        <!-- /.navbar-collapse -->
-        <div id="statusArea" class="row">
-          <h2>HOME ><span id="searchSpan">Search Results/</span><span id="untrackedSpan">Untracked/</span><span id="unwatchedSpan">Unwatched/</span><span id="watchedSpan">Watched/</span><span id="favoritesSpan">Favorites/</span>
+        <!-- from main.scss     -->
+        <link rel="stylesheet" href="css/main.css">
+    </head>
+
+    <body>
+        <div class="container-fluid">
+            <nav class="navbar navbar-default">
+                   <div class="collapse navbar-collapse">
+                     <div class="row">
+                        <div class="col-md-offset-3 col-md-8">
+                            <h1>IMDB Ain't Got Nuthin on Me:</h1>
+                            <h3>Your Movies, Your Ratings, All Yours, All the Time</h3>
+                        </div>
+                         <div class="col-offset-md-4 col-md-8" role="search">
+                            <input id="searchBar" placeholder="Search for Movies">
+                            <button id="search">Search</button>
+                            <ul>
+                              <li id="signin">Sign In/Sign Up</li>
+                              <li id="logout">Log Out</li>
+                            </ul>
+                          </div>
+                    </div><!-- /.navbar-collapse -->
+                    <div id="statusArea" class="row">
+                    <h2>HOME ><span id="searchSpan">Search Results/</span><span id="untrackedSpan">Untracked/</span><span id="unwatchedSpan">Unwatched/</span>
+                    <span id="watchedSpan">Watched/</span><span id="favoritesSpan">Favorites/</span>
+
                         <div class="col-md-offset-4 col-md-8">
                         <button id="untracked" class="btn btn-primary btn-lg active">Show Untracked</button>
                         <button id="unwatched" class="btn btn-primary btn-lg active">Show Unwatched</button>
@@ -63,19 +65,9 @@
         </div>
         <!-- jQuery -->
         <script src="dist/jquery.min.js"></script>
-        <!-- <script src="lib/node_modules/jquery-bar-rating/dist/jquery.barrating.min.js"></script> -->
-        <!-- <script type="text/javascript"> -->
-        <!-- $(function() { -->
-            <!-- $('#rating').barrating({ -->
-                <!-- theme: 'bootstrap-stars' -->
-            <!-- }); -->
-        <!-- }); -->
-        </script>
-        <!-- Boostrap -->
         <script src="dist/js/bootstrap.min.js"></script>
-
-        <script src="dist/app.js"></script>
-        <script src="/lib/node_modules/jquery-bar-rating/dist/jquery.barrating.min.js"></script>
+        <script src="lib/node_modules/jquery-bar-rating/dist/jquery.barrating.min.js"></script>
+        <script type="text/javascript" src="/dist/app.js"></script>
 
     </body>
 </html>

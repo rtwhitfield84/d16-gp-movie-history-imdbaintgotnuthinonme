@@ -56,6 +56,7 @@ $("#logout").click(function(){
 });
 
 function loadUnwatched() {
+	console.log("LOADUNWATCHED FIRING OFF");
 	let currentUser = signIn.getUser();
 	dbInteractions.getUnwatchedMovies(currentUser).then(function(data){
 			let returnedArray = $.map(data, function(value, index) {
@@ -75,9 +76,47 @@ function loadUnwatched() {
                     	uid: value.uid,
                     	id: value.id
                     };
-                	let unwatchedMovieInfo = ` <div id='${movieObj.imdbID}' class='col-offset-md-1 col-md-3'>  <img class='poster' src='${movieObj.Poster}'>  <p class='title'>${movieObj.Title}</p>  <p class='year'>${movieObj.Year}</p>  <p class='plot'>${movieObj.Plot}</p>  <label class='rate'>Rate This Movie</label>  <select class='rating'>  <option value='1'>1</option>  <option value='2'>2</option>  <option value='3'>3</option>  <option value='4'>4</option>  <option value='5'>5</option>  <option value='6'>6</option>  <option value='7'>7</option>  <option value='8'>8</option>  <option value='9'>9</option>  <option value='10'>10</option> </select> <button class='delete-btn' id='${movieObj.id}'>Delete</button>  </div> `;
+                	let unwatchedMovieInfo = ` <div id='${movieObj.imdbID}' class='col-offset-md-1 col-md-3'>
+                														<img class='poster' src='${movieObj.Poster}'> 
+                														<p class='title'>${movieObj.Title}</p>
+                														<p class='year'>${movieObj.Year}</p>
+                														<p class='plot'>${movieObj.Plot}</p>
+                														<label class='rate'>Rate This Movie</label>
+                														<select class='rating'>
+                														<option value='1'>1</option>
+                														<option value='2'>2</option>
+                														<option value='3'>3</option>
+                														<option value='4'>4</option>
+                														<option value='5'>5</option>
+                														<option value='6'>6</option>
+                														<option value='7'>7</option>
+                														<option value='8'>8</option>
+                														<option value='9'>9</option>
+                														<option value='10'>10</option
+                														</select> 
+                														<button class='delete-btn' id='${movieObj.id}'>Delete</button>
+                														</div> `;
                 	console.log(movieObj);
                 	$("#unwatchedView").append(unwatchedMovieInfo);
+							    
+							    $('.rating').each(function(index, item){
+							      $(item).barrating('show', {
+							        theme: 'bootstrap-stars',
+							        initialRating: 5,
+							        onSelect: function(value, text, event) {
+							          
+							          if (typeof(event) !== 'undefined') {
+							            // rating was selected by a user
+							            let parentEl = $(event.target).parents()[1];
+							            parentEl.firstChild.setAttribute('value', value);
+							            $(parentEl.firstChild).barrating('set', value);
+							          } else {
+							            // rating was selected programmatically
+							          }
+							        }
+							      });
+							    });
+
 					unwatchedIds.push(movieObj.imdbID);
 
     			}
@@ -180,6 +219,7 @@ $("#unwatched").click(function(){
 				$(".rating").change(function(){
 					let userRating = $(this).val();
 					if(userRating !== "10"){
+						console.log("~~~~~BUGTIME!:", event.target.parentNode);
 						let movieWatched = event.target.parentNode.childNodes[13].id;
 						event.target.parentNode.remove();
 						let movieDetails = {
