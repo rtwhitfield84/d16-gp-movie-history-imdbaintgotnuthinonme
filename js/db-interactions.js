@@ -14,6 +14,7 @@ let firebase = require("./firebaseConfig"),
 
 function searchAll(title, filterCallback, rating) {
 	let sumArray = [];
+	console.log("filterCallback", filterCallback);
 	return new Promise(function(resolve,reject) {
 		$.ajax({
 			url: `http://www.omdbapi.com/?s="${title}"&y=&plot=short&r=json`

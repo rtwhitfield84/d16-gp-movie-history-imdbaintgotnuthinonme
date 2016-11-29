@@ -1,9 +1,13 @@
 "use strict";
 
-let db = require("./db-interactions");
+let db = require("./db-interactions"),
+	moviesForCards = [];
 
 function returnAll(movies) {
+		console.log("movies", movies);
 		//send movies to wherever the cards are built
+		moviesForCards = movies;
+		return movies;
 }
 
 
@@ -18,6 +22,10 @@ function returnUntracked(movies) {
 	}, true);
 
 	//send this to wherever the cards are built
+		moviesForCards = untrackedMovies;
+		return untrackedMovies;
+
+
 
 }
 
@@ -27,6 +35,10 @@ function returnUnwatched(movies) {
 	});
 
 	//send this to wherever the cards are built
+		moviesForCards = unwatchedMovies;
+		return unwatchedMovies;
+
+
 
 }
 
@@ -36,6 +48,10 @@ function returnWatched(movies) {
 	});
 
 	//send this to wherever the cards are built
+		moviesForCards = watchedMovies;
+		return watchedMovies;
+
+
 
 }
 
@@ -46,13 +62,19 @@ function returnFavorites(movies, ratingThreshold) {
 	});
 	
 	//send this to wherever the cards are built
+		moviesForCards = favoriteMovies;
+		return favoriteMovies;
+
+}
 
 
+function getMovies() {
+	console.log("moviesForCards", moviesForCards);
+	return moviesForCards;
 }
 
 
 
 
 
-
-module.exports = {returnUntracked, returnUnwatched, returnWatched, returnFavorites, returnAll};
+module.exports = {returnUntracked, returnUnwatched, returnWatched, returnFavorites, returnAll, getMovies};
