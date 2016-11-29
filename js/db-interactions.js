@@ -1,7 +1,7 @@
 "use strict";
 
 let firebase = require("./firebaseConfig"),
-	cards = require("./movieCards.js"),
+	// cards = require("./movieCards.js"),
 	filter = require("./filtering.js"),
 	user = require("./user.js");
 
@@ -98,7 +98,7 @@ function getMoviesFromFirebase(userID) {
 					    return [value];
 					}
 					});
-			cards.cardBuilder(returnedArray);
+			// cards.cardBuilder(returnedArray);
 			resolve(userMovies);
 		});
 	});
@@ -187,7 +187,7 @@ function loadWatched(watched,uid) {
 					    return [value];
 					}
 					});
-			cards.cardBuilder(returnedArray);
+			// cards.cardBuilder(returnedArray);
 			resolve(userMovies);
 		});
 	});
@@ -208,7 +208,7 @@ function loadFavorites(rating,uid) {
 					    return [value];
 				}
 					});
-			cards.cardBuilder(returnedArray);
+			// cards.cardBuilder(returnedArray);
 			resolve(userMovies);
 		});
 	});
@@ -230,7 +230,7 @@ function setRating(ratingObject, movieWatched){
 
 
 
-module.exports = {searchOMDB, searchID, addToFirebase, removeFromFirebase, getMoviesFromFirebase, setWatched, loadFavorites, loadWatched, setRating};
+module.exports = {searchAll, searchID, addToFirebase, removeFromFirebase, getMoviesFromFirebase, setWatched, loadFavorites, loadWatched, setRating};
 
 
 
