@@ -4,7 +4,12 @@ let db = require("./db-interactions");
 
 function returnUntracked(movies) {
 	let untrackedMovies = $.grep(movies, (value, index) => {
-		value.uid ? true : false;
+		if (value.uid) {
+			return true;
+		} else {
+			return false;
+		}
+		// value.uid ? return true : return false;
 	}, true);
 
 	//send this to wherever the cards are built
