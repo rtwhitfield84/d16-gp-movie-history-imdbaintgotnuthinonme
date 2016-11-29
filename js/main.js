@@ -20,9 +20,9 @@ $("#search").click(() => {
 
 //accepts array of movie objects
 function cardBuilder(movieArray) {
-  $("#mainView").html('');
+  console.log("cardbuild running");
 
-  console.log("movieArray", movieArray);
+  $("#mainView").html('');
 
   let initialRatings = [],
     cardHTML,
@@ -32,8 +32,8 @@ function cardBuilder(movieArray) {
     addButton;
 
   movieArray.forEach(function(item, index) {
+
     initialRatings.push(item.rating || null);
-    console.log("index", index);
 
     if (item.Actors) {
       currentActors = `<p>Actors: ${item.Actors}</p>`;
@@ -42,9 +42,6 @@ function cardBuilder(movieArray) {
     }
 
 
-    if (index % 3 === 0) {
-      cardHTML = `<div class="row">`;
-    }
 
     if (!item.uid) {
       currentDeleteButton = '';
@@ -52,7 +49,7 @@ function cardBuilder(movieArray) {
       addButton = `<a id="${item.imdbID}" href="#" class="btn addToListBtn btn-primary">Add to Watchlist</a>`;
     } else {
       addButton = '';
-      currentDeleteButton = `<a data-delete-id="${item.id}" href="#" class="close deleteBtn ">x</a>`;
+      currentDeleteButton = `<a data-delete-id="${item.id}" href="#" class="close deleteBtn">x</a>`;
       stars = `<select class="starRating">
                   <option id="opt" value=""></option>
                   <option id="opt" value="1">1</option>
@@ -75,27 +72,38 @@ function cardBuilder(movieArray) {
     // if (item.Poster.indexOf("ia") > -1 || item.Poster === "N/A") {
     //   item.Poster = 'https://thumbs.dreamstime.com/t/film-clapper-board-video-icon-30142238.jpg';
     // }
-
-    cardHTML += ` <div id='${item.imdbID}' class='col-offset-md-1 col-md-3'>
+    cardHTML += `<div id='${item.imdbID}' class='col-offset-md-1 col-md-3'>
                     <img class='poster' src='${item.Poster}'>
                       <p class='title'>${item.Title}</p>
                       <p class='year'>${item.Year}</p>
                       <p >${currentActors}</p>
                       <label class='rate'>Rate This Movie</label>
-                      <button class='delete-btn' id='${item.id}'>Delete</button>
+                      ${currentDeleteButton}
                       <hr/>
-                      ${stars}
+                      ${stars}<br/>
+                      ${addButton}
                     </div> `;
+    console.log(`building cardHTML at index: ${index}`);
+    console.log("cardHTML", cardHTML);
 
-    if ((index + 1) % 3 === 0) {
-      cardHTML += `</div>`;
-    } else if (index === movieArray.length - 1) {
-      cardHTML += `</div>`;
+    if (index % 3 === 0) {
+    	console.log(`new row at index ${index}`);
+    	console.log("cardHTML IN ROW", cardHTML);
+    	let rowDiv = $('<div/>', {
+	    id: `row${index}`,
+	    class: 'row',
+	    html: cardHTML
+		}).appendTo('#mainView');
+    	console.log("clearing cardHTML");
+    	cardHTML = '';
     }
+    // if ((index + 1) % 3 === 0) {
+    //   cardHTML += `</div>`;
+    // } else if (index === movieArray.length - 1) {
+    //   cardHTML += `</div>`;
+    // }
 
-    $("#mainView").append(cardHTML);
-    cardHTML = '';
-
+    // $("#mainView").append(cardHTML);
 
   });
 
