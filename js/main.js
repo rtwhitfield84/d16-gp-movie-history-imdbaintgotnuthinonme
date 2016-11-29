@@ -1,15 +1,28 @@
 'use strict';
 
 let signIn = require("./user");
-let db = require('./db-interactions.js');
+let db = require('./db-interactions.js'),
+	filter = require("./filtering.js");
 
 // Event Listeners
 $("#search").click( () => {
-	db.searchAll($('#searchBar').val(), 'returnAll');
+	console.log("search clicked");
+	let myData = db.searchAll($('#searchBar').val(), 'returnAll')
+	.then((myData)=>{
+		console.log("promise time");
+		// console.log("filter.getMovies()", filter.getMovies());
+		console.log("myData", myData);
+		cardBuilder(filter.returnAll(myData.Search));
+		cardBuilder(filter.getMovies());
+		// cardBuilder(filter[])
 	});
+});
 
 //accepts array of movie objects
 function cardBuilder(movieArray) {
+	$("#mainView").html('');
+
+	console.log("movieArray", movieArray);
 
 let initialRatings = [],
 		cardHTML, 
@@ -18,13 +31,14 @@ let initialRatings = [],
 		stars, 
 		addButton; 
 
-	movieArray.forEach(function(index, item){
+	movieArray.forEach(function(item, index){
 		initialRatings.push(item.rating || null);
+		console.log("index", index);
 
-   if (item.Actors === undefined) {
-      currentActors = '';
-    } else {
+   if (item.Actors) {
       currentActors = `<p>Actors: ${item.Actors}</p>`;
+    } else {
+      currentActors = '';
     }
 
 
@@ -55,15 +69,18 @@ let initialRatings = [],
     }
 
     /*any poster address that contains ia or had a item of N/A returned no img so i replaced with ODB*/  
-    if (item.Poster.indexOf("ia") > -1 || item.Poster === "N/A") {
-      item.Poster = 'https://thumbs.dreamstime.com/t/film-clapper-board-video-icon-30142238.jpg';
-    }
+
+
+    //POSTER stuff
+    // if (item.Poster.indexOf("ia") > -1 || item.Poster === "N/A") {
+    //   item.Poster = 'https://thumbs.dreamstime.com/t/film-clapper-board-video-icon-30142238.jpg';
+    // }
 
 		cardHTML += ` <div id='${item.imdbID}' class='col-offset-md-1 col-md-3'>
 										<img class='poster' src='${item.Poster}'> 
 											<p class='title'>${item.Title}</p>
 											<p class='year'>${item.Year}</p>
-											<p class='plot'>${item.Plot}</p>
+											<p >${currentActors}</p>
 											<label class='rate'>Rate This Movie</label>
 											<button class='delete-btn' id='${item.id}'>Delete</button>
 											<hr/>
@@ -76,9 +93,9 @@ let initialRatings = [],
       cardHTML += `</div>`;
     }
     
+	$("#mainView").append(cardHTML);
     cardHTML = '';
 
-		$("#mainView").append(cardHTML);
 
 	});
 
@@ -108,4 +125,3 @@ let initialRatings = [],
 	});
 }
 
-module.exports = {cardBuilder};
