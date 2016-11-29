@@ -2,6 +2,11 @@
 
 let db = require("./db-interactions");
 
+function returnAll(movies) {
+		//send movies to wherever the cards are built
+}
+
+
 function returnUntracked(movies) {
 	let untrackedMovies = $.grep(movies, (value, index) => {
 		if (value.uid) {
@@ -47,4 +52,7 @@ function returnFavorites(movies, ratingThreshold) {
 
 
 
-module.exports = {returnUntracked, returnUnwatched, returnWatched, returnFavorites};
+
+
+
+module.exports = {returnUntracked, returnUnwatched, returnWatched, returnFavorites, returnAll};
